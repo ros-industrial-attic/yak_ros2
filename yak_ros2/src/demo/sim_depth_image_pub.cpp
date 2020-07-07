@@ -108,8 +108,6 @@ int main(int argc, char** argv)
   gl_depth_sim::SimDepthCamera sim(props);
   sim.add(*mesh_ptr, Eigen::Isometry3d::Identity());
 
-  // State for FPS monitoring
-  long frame_counter = 0;
   // In the main (rendering) thread, begin orbiting...
   const auto start = std::chrono::steady_clock::now();
 
@@ -128,13 +126,6 @@ int main(int argc, char** argv)
     const auto pose = lookat(camera_pos, look_at, Eigen::Vector3d(0, 0, 1));
 
     const auto depth_img = sim.render(pose);
-
-    frame_counter++;
-
-    if (frame_counter % 100 == 0)
-    {
-      std::cout << "FPS: " << frame_counter / dt << "\n";
-    }
 
     cv::Mat cv_img;
     gl_depth_sim::toCvImage16u(depth_img, cv_img);

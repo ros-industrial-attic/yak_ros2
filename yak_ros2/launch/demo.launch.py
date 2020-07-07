@@ -11,8 +11,22 @@ def generate_launch_description():
     ld = LaunchDescription([
         launch_ros.actions.Node(
             node_name='yak_ros2_node', package='yak_ros2', node_executable='yak_ros2_node', output='screen',
+            remappings=[('input_depth_image', '/image')],
             parameters=[{
                          'tsdf_frame_id': 'tsdf_origin',
+                         'camera_intrinsic_params':
+                           {
+                             'fx': 550.0,
+                             'fy': 550.0,
+                             'cx': 320.0,
+                             'cy': 240.0,
+                           },
+                         'cols': 640,
+                         'rows': 480,
+                         'volume_resolution': 0.001,
+                         'volume_x': 640,
+                         'volume_y': 640,
+                         'volume_z': 192,
                          }]
             ),
         launch_ros.actions.Node(

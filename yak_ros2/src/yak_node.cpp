@@ -15,7 +15,7 @@
 
 #include <pcl/io/ply_io.h>
 
-static const std::string DEFAULT_DEPTH_IMAGE_TOPIC = "/camera/depth/image_rect_raw";
+static const std::string DEFAULT_DEPTH_IMAGE_TOPIC = "input_depth_image";
 static const std::double_t DEFAULT_MINIMUM_TRANSLATION = 0.00001;
 
 /**
@@ -136,53 +136,53 @@ int main(int argc, char* argv[])
   rclcpp::init(argc, argv);
   auto node = rclcpp::Node::make_shared("fusion_node");
 
+  std::this_thread::sleep_for(std::chrono::seconds(1));
+
   std::string tsdf_base_frame;
-  node->get_parameter_or<std::string>("tsdf_base_frame", tsdf_base_frame, "turntable_platform");
+  node->get_parameter_or<std::string>("tsdf_frame_id", tsdf_base_frame, "tsdf_origin");
 
   // Set up TSDF parameters
-  kfusion::KinFuParams default_params = kfusion::KinFuParams::default_params();
+  kfusion::KinFuParams params = kfusion::KinFuParams::default_params();
 
   node->get_parameter_or("kinfu_params.use_pose_hints",
-                         default_params.use_pose_hints,
+                         params.use_pose_hints,
                          true);  // use robot forward kinematics to find camera pose relative to TSDF volume
   node->get_parameter_or("kinfu_params.use_icp",
-                         default_params.use_icp,
+                         params.use_icp,
                          false);  // since we're using robot FK to get the camera pose, don't use ICP (TODO: yet!)
   node->get_parameter_or(
-      "kinfu_params.update_via_sensor_motion", default_params.update_via_sensor_motion, false);  // deprecated?
+      "kinfu_params.update_via_sensor_motion", params.update_via_sensor_motion, false);  // deprecated?
 
-  node->get_parameter_or("kinfu_params.intr.fx", default_params.intr.fx, 380.4028625488281f);
-  node->get_parameter_or("kinfu_params.intr.fy", default_params.intr.fy, 380.81707763671875f);
-  node->get_parameter_or("kinfu_params.intr.cx", default_params.intr.cx, 316.48406982421875f);
-  node->get_parameter_or("kinfu_params.intr.fy", default_params.intr.cy, 245.3903045654297f);
+  node->get_parameter_or("kinfu_params.intr.fx", params.intr.fx, 550.0f);
+  node->get_parameter_or("kinfu_params.intr.fy", params.intr.fy, 550.0f);
+  node->get_parameter_or("kinfu_params.intr.cx", params.intr.cx, 320.0f);
+  node->get_parameter_or("kinfu_params.intr.fy", params.intr.cy, 240.0f);
 
-  float world_to_vol_x, world_to_vol_y, world_to_vol_z;
-  node->get_parameter_or("kinfu_params.world_to_volume.x", world_to_vol_x, -0.5f);
-  node->get_parameter_or("kinfu_params.world_to_volume.y", world_to_vol_y, -0.5f);
-  node->get_parameter_or("kinfu_params.world_to_volume.z", world_to_vol_z, -0.25f);
+  node->get_parameter_or("cols", params.cols, 640);
+  node->get_parameter_or("rows", params.rows, 480);
+
   Eigen::Affine3f world_to_volume(Eigen::Affine3f::Identity());
-  world_to_volume.translation() += Eigen::Vector3f(world_to_vol_x, world_to_vol_y, world_to_vol_z);
 
   int voxels_x, voxels_y, voxels_z;
-  node->get_parameter_or("kinfu_params.volume_dims_voxels.x", voxels_x, 320);
-  node->get_parameter_or("kinfu_params.volume_dims_voxels.y", voxels_y, 320);
-  node->get_parameter_or("kinfu_params.volume_dims_voxels.z", voxels_z, 320);
+  node->get_parameter_or("kinfu_params.volume_dims_voxels.x", voxels_x, 640);
+  node->get_parameter_or("kinfu_params.volume_dims_voxels.y", voxels_y, 640);
+  node->get_parameter_or("kinfu_params.volume_dims_voxels.z", voxels_z, 192);
 
   double voxel_resolution;
-  node->get_parameter_or("kinfu_params.voxel_resolution_meters", voxel_resolution, 0.003);
+  node->get_parameter_or("kinfu_params.voxel_resolution_meters", voxel_resolution, 0.001);
 
   // TODO: Autocompute resolution from volume length/width/height in meters
-  default_params.volume_dims = cv::Vec3i(voxels_x, voxels_y, voxels_z);
-  default_params.volume_resolution = voxel_resolution;
-  default_params.volume_pose = Eigen::Affine3f::Identity();  // This gets overwritten when Yak is initialized
-  default_params.tsdf_trunc_dist = default_params.volume_resolution * 5.0f;  // meters;
-  default_params.tsdf_max_weight = 50;                                       // frames
-  default_params.raycast_step_factor = 0.25;                                 // in voxel sizes
-  default_params.gradient_delta_factor = 0.25;                               // in voxel sizes
+  params.volume_dims = cv::Vec3i(voxels_x, voxels_y, voxels_z);
+  params.volume_resolution = voxel_resolution;
+  params.volume_pose = Eigen::Affine3f::Identity();  // This gets overwritten when Yak is initialized
+  params.tsdf_trunc_dist = params.volume_resolution * 5.0f;  // meters;
+  params.tsdf_max_weight = 50;                                       // frames
+  params.raycast_step_factor = 0.25;                                 // in voxel sizes
+  params.gradient_delta_factor = 0.25;                               // in voxel sizes
 
   RCLCPP_INFO(node->get_logger(), "Starting fusion node");
 
-  auto fusion = std::make_shared<Fusion>(node, default_params, world_to_volume, tsdf_base_frame);
+  auto fusion = std::make_shared<Fusion>(node, params, world_to_volume, tsdf_base_frame);
 
   rclcpp::spin(node);
   rclcpp::shutdown();
