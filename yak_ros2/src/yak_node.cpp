@@ -26,8 +26,8 @@ class Fusion
 {
 public:
   /**
-   * @brief OnlineFusionServer constructor
-   * @param nh - ROS node handle
+   * @brief Fusion constructor
+   * @param node - rclcpp node
    * @param params - KinFu parameters such as TSDF volume size, resolution, etc.
    * @param world_to_volume - Transform from world frame to volume origin frame.
    * @param tsdf_base_frame - The name of the tf frame that will be used as the base frame when performing lookups
@@ -38,13 +38,13 @@ public:
                   const Eigen::Affine3f& world_to_volume,
                   const std::string tsdf_base_frame)
     : node_(node)
-    , fusion_(params, world_to_volume)
-    , params_(params)
     , clock_(std::make_shared<rclcpp::Clock>(RCL_SYSTEM_TIME))
+    , tsdf_base_frame_(tsdf_base_frame)
     , tf_buffer_(clock_)
     , robot_tform_listener_(tf_buffer_)
+    , fusion_(params, world_to_volume)
+    , params_(params)
     , world_to_camera_prev_(Eigen::Affine3d::Identity())
-    , tsdf_base_frame_(tsdf_base_frame)
   {
     // Subscribe to depth images published on the topic named by the depth_topic param. Set up callback to integrate
     // images when received.
@@ -52,7 +52,7 @@ public:
 
     auto depth_image_cb = [this](const sensor_msgs::msg::Image::SharedPtr image_in) -> void {
       // Get the camera pose in the world frame at the time when the depth image was generated.
-      RCLCPP_INFO(node_->get_logger(), "Got depth image");
+      RCLCPP_DEBUG(node_->get_logger(), "Got depth image");
       geometry_msgs::msg::TransformStamped transform_world_to_camera;
       try
       {
@@ -66,7 +66,7 @@ public:
       catch (tf2::TransformException& ex)
       {
         // Abort integration if tf lookup failed
-        RCLCPP_WARN(node_->get_logger(), "%s", ex.what());
+        RCLCPP_WARN(node_->get_logger(),ex.what());
         return;
       }
       Eigen::Affine3d world_to_camera = tf2::transformToEigen(transform_world_to_camera);
@@ -78,7 +78,7 @@ public:
 
       if (motion_mag < DEFAULT_MINIMUM_TRANSLATION)
       {
-        RCLCPP_INFO(node_->get_logger(), "Camera motion below threshold");
+        RCLCPP_DEBUG(node_->get_logger(), "Camera motion below threshold");
         return;
       }
 
@@ -107,6 +107,7 @@ public:
       RCLCPP_INFO(node_->get_logger(), "Meshing done, saving ply");
       pcl::io::savePLYFileBinary("cubes.ply", mesh);
       RCLCPP_INFO(node_->get_logger(), "Saving done");
+      res->success = true;
     };
 
     // Advertise service for marching cubes meshing
@@ -134,9 +135,22 @@ public:
 int main(int argc, char* argv[])
 {
   rclcpp::init(argc, argv);
-  auto node = rclcpp::Node::make_shared("fusion_node");
+  auto node = rclcpp::Node::make_shared("yak_node");
 
-  std::this_thread::sleep_for(std::chrono::seconds(1));
+  node->declare_parameter("tsdf_frame_id");
+  node->declare_parameter("use_pose_hints");
+  node->declare_parameter("use_icp");
+  node->declare_parameter("update_via_sensor_motion");
+  node->declare_parameter("camera_intrinsic_params.fx");
+  node->declare_parameter("camera_intrinsic_params.fy");
+  node->declare_parameter("camera_intrinsic_params.cx");
+  node->declare_parameter("camera_intrinsic_params.cy");
+  node->declare_parameter("cols");
+  node->declare_parameter("rows");
+  node->declare_parameter("volume_x");
+  node->declare_parameter("volume_y");
+  node->declare_parameter("volume_z");
+  node->declare_parameter("voxel_resolution");
 
   std::string tsdf_base_frame;
   node->get_parameter_or<std::string>("tsdf_frame_id", tsdf_base_frame, "tsdf_origin");
@@ -144,45 +158,41 @@ int main(int argc, char* argv[])
   // Set up TSDF parameters
   kfusion::KinFuParams params = kfusion::KinFuParams::default_params();
 
-  node->get_parameter_or("kinfu_params.use_pose_hints",
+  node->get_parameter_or("use_pose_hints",
                          params.use_pose_hints,
                          true);  // use robot forward kinematics to find camera pose relative to TSDF volume
-  node->get_parameter_or("kinfu_params.use_icp",
+  node->get_parameter_or("use_icp",
                          params.use_icp,
                          false);  // since we're using robot FK to get the camera pose, don't use ICP (TODO: yet!)
   node->get_parameter_or(
-      "kinfu_params.update_via_sensor_motion", params.update_via_sensor_motion, false);  // deprecated?
+      "update_via_sensor_motion", params.update_via_sensor_motion, false);  // deprecated?
 
-  node->get_parameter_or("kinfu_params.intr.fx", params.intr.fx, 550.0f);
-  node->get_parameter_or("kinfu_params.intr.fy", params.intr.fy, 550.0f);
-  node->get_parameter_or("kinfu_params.intr.cx", params.intr.cx, 320.0f);
-  node->get_parameter_or("kinfu_params.intr.fy", params.intr.cy, 240.0f);
+  node->get_parameter_or("camera_intrinsic_params.fx", params.intr.fx, 550.0f);
+  node->get_parameter_or("camera_intrinsic_params.fy", params.intr.fy, 550.0f);
+  node->get_parameter_or("camera_intrinsic_params.cx", params.intr.cx, 320.0f);
+  node->get_parameter_or("camera_intrinsic_params.cy", params.intr.cy, 240.0f);
 
   node->get_parameter_or("cols", params.cols, 640);
   node->get_parameter_or("rows", params.rows, 480);
 
-  Eigen::Affine3f world_to_volume(Eigen::Affine3f::Identity());
-
   int voxels_x, voxels_y, voxels_z;
-  node->get_parameter_or("kinfu_params.volume_dims_voxels.x", voxels_x, 640);
-  node->get_parameter_or("kinfu_params.volume_dims_voxels.y", voxels_y, 640);
-  node->get_parameter_or("kinfu_params.volume_dims_voxels.z", voxels_z, 192);
+  node->get_parameter_or("volume_x", voxels_x, 640);
+  node->get_parameter_or("volume_y", voxels_y, 640);
+  node->get_parameter_or("volume_z", voxels_z, 192);
 
-  double voxel_resolution;
-  node->get_parameter_or("kinfu_params.voxel_resolution_meters", voxel_resolution, 0.001);
+  node->get_parameter_or<float>("voxel_resolution", params.volume_resolution, 0.001f);
 
   // TODO: Autocompute resolution from volume length/width/height in meters
   params.volume_dims = cv::Vec3i(voxels_x, voxels_y, voxels_z);
-  params.volume_resolution = voxel_resolution;
-  params.volume_pose = Eigen::Affine3f::Identity();  // This gets overwritten when Yak is initialized
+  params.volume_pose = Eigen::Affine3f::Identity();          // This gets overwritten when Yak is initialized
   params.tsdf_trunc_dist = params.volume_resolution * 5.0f;  // meters;
-  params.tsdf_max_weight = 50;                                       // frames
-  params.raycast_step_factor = 0.25;                                 // in voxel sizes
-  params.gradient_delta_factor = 0.25;                               // in voxel sizes
+  params.tsdf_max_weight = 50;                               // frames
+  params.raycast_step_factor = 0.25;                         // in voxel sizes
+  params.gradient_delta_factor = 0.25;                       // in voxel sizes
 
   RCLCPP_INFO(node->get_logger(), "Starting fusion node");
 
-  auto fusion = std::make_shared<Fusion>(node, params, world_to_volume, tsdf_base_frame);
+  auto fusion = std::make_shared<Fusion>(node, params, Eigen::Affine3f::Identity(), tsdf_base_frame);
 
   rclcpp::spin(node);
   rclcpp::shutdown();
