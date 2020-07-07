@@ -16,12 +16,10 @@ jobs:
              OS_NAME: ubuntu,
              OS_CODE_NAME: bionic,
              ROS_DISTRO: eloquent,
-             ROSDEP_SKIP_KEYS: nvidia-cuda-dev,
              BADGE: bionic,
              CLANG_FORMAT_CHECK: file,
              CLANG_FORMAT_VERSION: 8,
-             DOCKER_PULL: false,
-             DOCKER_IMAGE: "schornakj/yak_ci:eloquent-cuda10.2"}
+             }
           - {OS_NAME: ubuntu,
              OS_CODE_NAME: bionic,
              ROS_DISTRO: eloquent,
@@ -30,7 +28,8 @@ jobs:
              UPSTREAM_CMAKE_ARGS: "-DCMAKE_LIBRARY_PATH=/usr/local/cuda/lib64/stubs/",
              UPSTREAM_WORKSPACE: 'github:ros-industrial/yak#devel',
              DOCKER_PULL: false,
-             DOCKER_IMAGE: "schornakj/yak_ci:eloquent-cuda10.2"}
+             DOCKER_IMAGE: "schornakj/yak-1:eloquent-cuda10.2",
+             }
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
