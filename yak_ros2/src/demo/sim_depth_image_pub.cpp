@@ -30,7 +30,7 @@ static Eigen::Isometry3d lookat(const Eigen::Vector3d& origin, const Eigen::Vect
 }
 
 int main(int argc, char** argv)
-{  
+{
   rclcpp::init(argc, argv);
   auto node = rclcpp::Node::make_shared("image_simulator_node");
 
@@ -117,9 +117,7 @@ int main(int argc, char** argv)
   {
     double dt = std::chrono::duration<double>(std::chrono::steady_clock::now() - start).count();
 
-    Eigen::Vector3d camera_pos(radius * cos(dt * orbit_speed),
-                               radius * sin(dt * orbit_speed),
-                               z);
+    Eigen::Vector3d camera_pos(radius * cos(dt * orbit_speed), radius * sin(dt * orbit_speed), z);
 
     Eigen::Vector3d look_at(0, 0, 0);
 

@@ -66,7 +66,7 @@ public:
       catch (tf2::TransformException& ex)
       {
         // Abort integration if tf lookup failed
-        RCLCPP_WARN(node_->get_logger(),ex.what());
+        RCLCPP_WARN(node_->get_logger(), ex.what());
         return;
       }
       Eigen::Affine3d world_to_camera = tf2::transformToEigen(transform_world_to_camera);
@@ -164,8 +164,7 @@ int main(int argc, char* argv[])
   node->get_parameter_or("use_icp",
                          params.use_icp,
                          false);  // since we're using robot FK to get the camera pose, don't use ICP (TODO: yet!)
-  node->get_parameter_or(
-      "update_via_sensor_motion", params.update_via_sensor_motion, false);  // deprecated?
+  node->get_parameter_or("update_via_sensor_motion", params.update_via_sensor_motion, false);  // deprecated?
 
   node->get_parameter_or("camera_intrinsic_params.fx", params.intr.fx, 550.0f);
   node->get_parameter_or("camera_intrinsic_params.fy", params.intr.fy, 550.0f);
