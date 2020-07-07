@@ -17,4 +17,5 @@ rosidl_generate_interfaces(yak_ros2_msgs
   std_msgs
   )
 
+ament_export_dependencies(rosidl_default_runtime)
 ament_package()
