@@ -16,7 +16,6 @@
   <depend>gl_depth_sim</depend>
   <depend>image_transport</depend>
   <depend>libpcl-all-dev</depend>
-  <depend>pcl_ros</depend>
   <depend>rclcpp</depend>
   <depend>sensor_msgs</depend>
   <depend>std_msgs</depend>
