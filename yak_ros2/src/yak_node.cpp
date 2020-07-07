@@ -62,9 +62,6 @@ public:
                                        tf2::TimePoint(std::chrono::seconds(image_in->header.stamp.sec) +
                                                       std::chrono::nanoseconds(image_in->header.stamp.nanosec)),
                                        tf2::Duration(1000000000));
-        // transform_world_to_camera = tf_buffer_.lookupTransform("table", "camera_base_link",
-        // tf2::TimePoint(std::chrono::seconds(image_in->header.stamp.sec) +
-        // std::chrono::nanoseconds(image_in->header.stamp.nanosec)));
       }
       catch (tf2::TransformException& ex)
       {
@@ -129,6 +126,9 @@ private:
   yak::FusionServer fusion_;
   const kfusion::KinFuParams params_;
   Eigen::Affine3d world_to_camera_prev_;
+
+public:
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 };
 
 int main(int argc, char* argv[])

@@ -66,9 +66,27 @@ install(TARGETS ${PROJECT_NAME}_node
 install(DIRECTORY launch demo
         DESTINATION share/${PROJECT_NAME})
 
-if (DEFINED BUILD_DEMO)
+if(DEFINED BUILD_DEMO)
+    find_package(gl_depth_sim REQUIRED)
+    find_package(image_transport REQUIRED)
+    add_executable(${PROJECT_NAME}_image_simulator
+      src/demo/sim_depth_image_pub.cpp)
+    target_include_directories(${PROJECT_NAME}_image_simulator PUBLIC
+      ${rclcpp_INCLUDE_DIRS}
+      ${image_transport_INCLUDE_DIRS}
+      ${sensor_msgs_INCLUDE_DIRS}
+      ${tf2_ros_INCLUDE_DIRS}
+      )
+    target_link_libraries(${PROJECT_NAME}_image_simulator
+      ${cv_bridge_LIBRARIES}
+      Eigen3::Eigen
+      gl_depth_sim::gl_depth_sim
+      gl_depth_sim::gl_depth_sim_interfaces
+      ${image_transport_LIBRARIES}
+      ${rclcpp_LIBRARIES}
+      ${sensor_msgs_LIBRARIES}
+      ${tf2_ros_LIBRARIES}
+      )
     install(TARGETS ${PROJECT_NAME}_image_simulator
             RUNTIME DESTINATION lib/${PROJECT_NAME})
 endif()
-
-

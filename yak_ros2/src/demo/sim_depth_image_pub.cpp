@@ -2,12 +2,14 @@
 #include <gl_depth_sim/mesh_loader.h>
 #include <gl_depth_sim/interfaces/opencv_interface.h>
 
-#include <ros/ros.h>
+#include <rclcpp/rclcpp.hpp>
 #include <image_transport/image_transport.h>
 #include <cv_bridge/cv_bridge.h>
 #include <tf2/transform_datatypes.h>
 #include <tf2_ros/transform_broadcaster.h>
 #include <tf2_eigen/tf2_eigen.h>
+
+#include <opencv2/highgui.hpp>
 
 #include <chrono>
 
@@ -28,42 +30,67 @@ static Eigen::Isometry3d lookat(const Eigen::Vector3d& origin, const Eigen::Vect
 }
 
 int main(int argc, char** argv)
-{
-  ros::init(argc, argv, "image_simulator_node");
-  ros::NodeHandle nh, pnh("~");
+{  
+  rclcpp::init(argc, argv);
+  auto node = rclcpp::Node::make_shared("image_simulator_node");
 
   // Setup ROS interfaces
-  image_transport::ImageTransport it(nh);
+  image_transport::ImageTransport it(node);
   image_transport::Publisher image_pub = it.advertise(DEFAULT_IMAGE_TOPIC, 1);
+  tf2_ros::TransformBroadcaster broadcaster(node);
 
-  tf2_ros::TransformBroadcaster broadcaster;
+  // declare parameters
+  node->declare_parameter("mesh");
+  node->declare_parameter("world");
+  node->declare_parameter("camera");
+  node->declare_parameter("orbit_speed");
+  node->declare_parameter("framerate");
+  node->declare_parameter("radius");
+  node->declare_parameter("focal_length");
+  node->declare_parameter("z");
+  node->declare_parameter("width");
+  node->declare_parameter("height");
 
   // Load ROS parameters
   std::string mesh_path;
-  if (!pnh.getParam("mesh", mesh_path))
+  if (!node->get_parameter("mesh", mesh_path))
   {
-    ROS_ERROR_STREAM("User must set the 'mesh' private parameter");
+    RCLCPP_ERROR(node->get_logger(), "User must set the 'mesh' parameter");
     return 1;
   }
 
-  std::string base_frame = pnh.param<std::string>("base_frame", "world");
-  std::string camera_frame = pnh.param<std::string>("camera_frame", "camera");
+  std::string base_frame;
+  node->get_parameter_or<std::string>("base_frame", base_frame, "world");
 
-  double orbit_speed = pnh.param<double>("orbit_speed", 1.0);
-  double framerate = pnh.param<double>("framerate", 30.0);
+  std::string camera_frame;
+  node->get_parameter_or<std::string>("camera_frame", camera_frame, "camera");
 
-  double radius = pnh.param<double>("radius", 0.5);
-  double z = pnh.param<double>("z", 0.5);
+  double orbit_speed;
+  node->get_parameter_or<double>("orbit_speed", orbit_speed, 1.0);
 
-  double focal_length = pnh.param<double>("focal_length", 550.0);
-  int width = pnh.param<int>("width", 640);
-  int height = pnh.param<int>("height", 480);
+  double framerate;
+  node->get_parameter_or<double>("framerate", framerate, 30.0);
+
+  double radius;
+  node->get_parameter_or<double>("radius", radius, 0.5);
+
+  double z;
+  node->get_parameter_or<double>("z", z, 0.5);
+
+  double focal_length;
+  node->get_parameter_or<double>("focal_length", focal_length, 550.0);
+
+  int width;
+  node->get_parameter_or<int>("width", width, 640);
+
+  int height;
+  node->get_parameter_or<int>("height", height, 480);
 
   auto mesh_ptr = gl_depth_sim::loadMesh(mesh_path);
 
   if (!mesh_ptr)
   {
-    ROS_ERROR_STREAM("Unable to load mesh from path: " << mesh_path);
+    RCLCPP_ERROR(node->get_logger(), "Unable to load mesh from path: " + mesh_path);
     return 1;
   }
 
@@ -86,13 +113,15 @@ int main(int argc, char** argv)
   // In the main (rendering) thread, begin orbiting...
   const auto start = std::chrono::steady_clock::now();
 
-  ros::Rate rate(framerate);
+  rclcpp::Rate rate(framerate);
 
-  while (ros::ok())
+  while (rclcpp::ok())
   {
     double dt = std::chrono::duration<double>(std::chrono::steady_clock::now() - start).count();
 
-    Eigen::Vector3d camera_pos(radius * cos(dt * orbit_speed), radius * sin(dt * orbit_speed), z);
+    Eigen::Vector3d camera_pos(radius * cos(dt * orbit_speed),
+                               radius * sin(dt * orbit_speed),
+                               z);
 
     Eigen::Vector3d look_at(0, 0, 0);
 
@@ -109,14 +138,15 @@ int main(int argc, char** argv)
 
     cv::Mat cv_img;
     gl_depth_sim::toCvImage16u(depth_img, cv_img);
+
     cv_bridge::CvImage image;
-    image.header.stamp = ros::Time::now();
+    image.header.stamp = node->now();
     image.header.frame_id = camera_frame;
     image.encoding = sensor_msgs::image_encodings::TYPE_16UC1;
     image.image = cv_img;
     image_pub.publish(image.toImageMsg());
 
-    geometry_msgs::TransformStamped transform_stamped;
+    geometry_msgs::msg::TransformStamped transform_stamped;
     transform_stamped.transform.translation.x = pose.translation().x();
     transform_stamped.transform.translation.y = pose.translation().y();
     transform_stamped.transform.translation.z = pose.translation().z();
@@ -128,7 +158,7 @@ int main(int argc, char** argv)
     broadcaster.sendTransform(transform_stamped);
 
     rate.sleep();
-    ros::spinOnce();
+    rclcpp::spin_some(node);
   }
 
   return 0;

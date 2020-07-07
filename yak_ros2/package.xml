@@ -13,7 +13,7 @@
   <depend>cv_bridge</depend>
   <depend>eigen</depend>
   <depend>geometry_msgs</depend>
-  <depend condition="$BUILD_DEMO == True">gl_depth_sim</depend>
+  <depend>gl_depth_sim</depend>
   <depend>image_transport</depend>
   <depend>libpcl-all-dev</depend>
   <depend>pcl_ros</depend>
