@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.5.0)
 project(yak_ros2 VERSION 0.1.0 LANGUAGES CXX)
 
 if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 14)
+  set(CMAKE_CXX_STANDARD 17)
 endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
@@ -66,7 +66,7 @@ install(TARGETS ${PROJECT_NAME}_node
 install(DIRECTORY launch demo
         DESTINATION share/${PROJECT_NAME})
 
-if(DEFINED BUILD_DEMO)
+if(BUILD_DEMO)
     find_package(gl_depth_sim REQUIRED)
     find_package(image_transport REQUIRED)
     add_executable(${PROJECT_NAME}_image_simulator
@@ -87,6 +87,18 @@ if(DEFINED BUILD_DEMO)
       ${sensor_msgs_LIBRARIES}
       ${tf2_ros_LIBRARIES}
       )
-    install(TARGETS ${PROJECT_NAME}_image_simulator
+
+    add_executable(${PROJECT_NAME}_tf_broadcaster
+      src/demo/sim_tf_broadcaster.cpp)
+    target_include_directories(${PROJECT_NAME}_tf_broadcaster PUBLIC
+      ${rclcpp_INCLUDE_DIRS}
+      ${tf2_ros_INCLUDE_DIRS}
+      )
+    target_link_libraries(${PROJECT_NAME}_tf_broadcaster
+      Eigen3::Eigen
+      ${rclcpp_LIBRARIES}
+      ${tf2_ros_LIBRARIES}
+      )
+    install(TARGETS ${PROJECT_NAME}_image_simulator ${PROJECT_NAME}_tf_broadcaster
             RUNTIME DESTINATION lib/${PROJECT_NAME})
 endif()
