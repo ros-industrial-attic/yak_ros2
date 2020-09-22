@@ -92,7 +92,8 @@ int main(int argc, char** argv)
     rate.sleep();
     try
     {
-      geometry_msgs::msg::TransformStamped tf_camera_st = buffer.lookupTransform(base_frame, camera_frame, tf2::TimePointZero);
+      geometry_msgs::msg::TransformStamped tf_camera_st =
+          buffer.lookupTransform(base_frame, camera_frame, tf2::TimePointZero);
       const auto pose = tf2::transformToEigen(tf_camera_st);
       const auto depth_img = sim.render(pose);
 
@@ -106,7 +107,7 @@ int main(int argc, char** argv)
       image.image = cv_img;
       image_pub.publish(image.toImageMsg());
     }
-    catch (tf2::LookupException &e)
+    catch (tf2::LookupException& e)
     {
       RCLCPP_ERROR_STREAM(node->get_logger(), e.what());
     }
