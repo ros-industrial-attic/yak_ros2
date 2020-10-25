@@ -1,0 +1,54 @@
+\hypertarget{yak__node_8cpp}{}\doxysection{yak\+\_\+ros2/src/yak\+\_\+node.cpp File Reference}
+\label{yak__node_8cpp}\index{yak\_ros2/src/yak\_node.cpp@{yak\_ros2/src/yak\_node.cpp}}
+{\ttfamily \#include $<$rclcpp/rclcpp.\+hpp$>$}\newline
+{\ttfamily \#include $<$yak/yak\+\_\+server.\+h$>$}\newline
+{\ttfamily \#include $<$yak/mc/marching\+\_\+cubes.\+h$>$}\newline
+{\ttfamily \#include $<$tf2\+\_\+ros/transform\+\_\+listener.\+h$>$}\newline
+{\ttfamily \#include $<$tf2\+\_\+ros/buffer.\+h$>$}\newline
+{\ttfamily \#include $<$tf2\+\_\+eigen/tf2\+\_\+eigen.\+h$>$}\newline
+{\ttfamily \#include $<$cv\+\_\+bridge/cv\+\_\+bridge.\+h$>$}\newline
+{\ttfamily \#include $<$sensor\+\_\+msgs/msg/image.\+hpp$>$}\newline
+{\ttfamily \#include $<$geometry\+\_\+msgs/msg/transform\+\_\+stamped.\+hpp$>$}\newline
+{\ttfamily \#include $<$std\+\_\+srvs/srv/trigger.\+hpp$>$}\newline
+{\ttfamily \#include $<$pcl/io/ply\+\_\+io.\+h$>$}\newline
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classFusion}{Fusion}}
+\begin{DoxyCompactList}\small\item\em The \mbox{\hyperlink{classFusion}{Fusion}} class. Integrate depth images into a T\+S\+DF volume. When requested, mesh the volume using marching cubes. Note that this will work using both simulated and real robots and depth cameras. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{yak__node_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+static const std\+::string \mbox{\hyperlink{yak__node_8cpp_adee102d67fcf53b0e935e533010c5701}{D\+E\+F\+A\+U\+L\+T\+\_\+\+D\+E\+P\+T\+H\+\_\+\+I\+M\+A\+G\+E\+\_\+\+T\+O\+P\+IC}} = \char`\"{}input\+\_\+depth\+\_\+image\char`\"{}
+\item 
+static const std\+::double\+\_\+t \mbox{\hyperlink{yak__node_8cpp_a1e3ad9b41d319fb62a60a9c03faedcf1}{D\+E\+F\+A\+U\+L\+T\+\_\+\+M\+I\+N\+I\+M\+U\+M\+\_\+\+T\+R\+A\+N\+S\+L\+A\+T\+I\+ON}} = 0.\+00001
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{yak__node_8cpp_a0ddf1224851353fc92bfbff6f499fa97}\label{yak__node_8cpp_a0ddf1224851353fc92bfbff6f499fa97}} 
+\index{yak\_node.cpp@{yak\_node.cpp}!main@{main}}
+\index{main@{main}!yak\_node.cpp@{yak\_node.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{yak__node_8cpp_adee102d67fcf53b0e935e533010c5701}\label{yak__node_8cpp_adee102d67fcf53b0e935e533010c5701}} 
+\index{yak\_node.cpp@{yak\_node.cpp}!DEFAULT\_DEPTH\_IMAGE\_TOPIC@{DEFAULT\_DEPTH\_IMAGE\_TOPIC}}
+\index{DEFAULT\_DEPTH\_IMAGE\_TOPIC@{DEFAULT\_DEPTH\_IMAGE\_TOPIC}!yak\_node.cpp@{yak\_node.cpp}}
+\doxysubsubsection{\texorpdfstring{DEFAULT\_DEPTH\_IMAGE\_TOPIC}{DEFAULT\_DEPTH\_IMAGE\_TOPIC}}
+{\footnotesize\ttfamily const std\+::string D\+E\+F\+A\+U\+L\+T\+\_\+\+D\+E\+P\+T\+H\+\_\+\+I\+M\+A\+G\+E\+\_\+\+T\+O\+P\+IC = \char`\"{}input\+\_\+depth\+\_\+image\char`\"{}\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{yak__node_8cpp_a1e3ad9b41d319fb62a60a9c03faedcf1}\label{yak__node_8cpp_a1e3ad9b41d319fb62a60a9c03faedcf1}} 
+\index{yak\_node.cpp@{yak\_node.cpp}!DEFAULT\_MINIMUM\_TRANSLATION@{DEFAULT\_MINIMUM\_TRANSLATION}}
+\index{DEFAULT\_MINIMUM\_TRANSLATION@{DEFAULT\_MINIMUM\_TRANSLATION}!yak\_node.cpp@{yak\_node.cpp}}
+\doxysubsubsection{\texorpdfstring{DEFAULT\_MINIMUM\_TRANSLATION}{DEFAULT\_MINIMUM\_TRANSLATION}}
+{\footnotesize\ttfamily const std\+::double\+\_\+t D\+E\+F\+A\+U\+L\+T\+\_\+\+M\+I\+N\+I\+M\+U\+M\+\_\+\+T\+R\+A\+N\+S\+L\+A\+T\+I\+ON = 0.\+00001\hspace{0.3cm}{\ttfamily [static]}}
+

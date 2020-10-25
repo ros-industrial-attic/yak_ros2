@@ -1,0 +1,43 @@
+\hypertarget{sim__tf__broadcaster_8cpp}{}\doxysection{yak\+\_\+ros2/src/demo/sim\+\_\+tf\+\_\+broadcaster.cpp File Reference}
+\label{sim__tf__broadcaster_8cpp}\index{yak\_ros2/src/demo/sim\_tf\_broadcaster.cpp@{yak\_ros2/src/demo/sim\_tf\_broadcaster.cpp}}
+{\ttfamily \#include $<$rclcpp/rclcpp.\+hpp$>$}\newline
+{\ttfamily \#include $<$tf2/transform\+\_\+datatypes.\+h$>$}\newline
+{\ttfamily \#include $<$tf2\+\_\+ros/transform\+\_\+broadcaster.\+h$>$}\newline
+{\ttfamily \#include $<$tf2\+\_\+eigen/tf2\+\_\+eigen.\+h$>$}\newline
+{\ttfamily \#include $<$chrono$>$}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+static Eigen\+::\+Isometry3d \mbox{\hyperlink{sim__tf__broadcaster_8cpp_a05287f2a41863d37366c7935828c71f0}{lookat}} (const Eigen\+::\+Vector3d \&origin, const Eigen\+::\+Vector3d \&eye, const Eigen\+::\+Vector3d \&up)
+\item 
+int \mbox{\hyperlink{sim__tf__broadcaster_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{main}} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+static const std\+::string \mbox{\hyperlink{sim__tf__broadcaster_8cpp_a2bc12f40d924935824a4f26b2c1cdab4}{D\+E\+F\+A\+U\+L\+T\+\_\+\+I\+M\+A\+G\+E\+\_\+\+T\+O\+P\+IC}} = \char`\"{}image\char`\"{}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{sim__tf__broadcaster_8cpp_a05287f2a41863d37366c7935828c71f0}\label{sim__tf__broadcaster_8cpp_a05287f2a41863d37366c7935828c71f0}} 
+\index{sim\_tf\_broadcaster.cpp@{sim\_tf\_broadcaster.cpp}!lookat@{lookat}}
+\index{lookat@{lookat}!sim\_tf\_broadcaster.cpp@{sim\_tf\_broadcaster.cpp}}
+\doxysubsubsection{\texorpdfstring{lookat()}{lookat()}}
+{\footnotesize\ttfamily static Eigen\+::\+Isometry3d lookat (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Vector3d \&}]{origin,  }\item[{const Eigen\+::\+Vector3d \&}]{eye,  }\item[{const Eigen\+::\+Vector3d \&}]{up }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{sim__tf__broadcaster_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}\label{sim__tf__broadcaster_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}} 
+\index{sim\_tf\_broadcaster.cpp@{sim\_tf\_broadcaster.cpp}!main@{main}}
+\index{main@{main}!sim\_tf\_broadcaster.cpp@{sim\_tf\_broadcaster.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{sim__tf__broadcaster_8cpp_a2bc12f40d924935824a4f26b2c1cdab4}\label{sim__tf__broadcaster_8cpp_a2bc12f40d924935824a4f26b2c1cdab4}} 
+\index{sim\_tf\_broadcaster.cpp@{sim\_tf\_broadcaster.cpp}!DEFAULT\_IMAGE\_TOPIC@{DEFAULT\_IMAGE\_TOPIC}}
+\index{DEFAULT\_IMAGE\_TOPIC@{DEFAULT\_IMAGE\_TOPIC}!sim\_tf\_broadcaster.cpp@{sim\_tf\_broadcaster.cpp}}
+\doxysubsubsection{\texorpdfstring{DEFAULT\_IMAGE\_TOPIC}{DEFAULT\_IMAGE\_TOPIC}}
+{\footnotesize\ttfamily const std\+::string D\+E\+F\+A\+U\+L\+T\+\_\+\+I\+M\+A\+G\+E\+\_\+\+T\+O\+P\+IC = \char`\"{}image\char`\"{}\hspace{0.3cm}{\ttfamily [static]}}
+

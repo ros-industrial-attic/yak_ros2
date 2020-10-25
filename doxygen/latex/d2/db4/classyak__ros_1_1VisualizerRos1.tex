@@ -1,0 +1,250 @@
+\hypertarget{classyak__ros_1_1VisualizerRos1}{}\doxysection{yak\+\_\+ros\+::Visualizer\+Ros1 Class Reference}
+\label{classyak__ros_1_1VisualizerRos1}\index{yak\_ros::VisualizerRos1@{yak\_ros::VisualizerRos1}}
+
+
+This class visualizes useful information for yak\+\_\+ros1\+\_\+node. It publishes the tsdf volume as a bounding box as well as the resultant mesh.  
+
+
+
+
+{\ttfamily \#include $<$visualizer\+\_\+node.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classyak__ros_1_1VisualizerRos1_adfe0398f2b34278bc567924064629f70}{Visualizer\+Ros1}} (const ros\+::\+Node\+Handle \&nh, const std\+::string \&frame\+\_\+id)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classyak__ros_1_1VisualizerRos1_a4da85217c0dc895e2284f1a188e0b66d}{set\+Bounding\+Box}} (const double \&neg\+\_\+x, const double \&neg\+\_\+y, const double \&neg\+\_\+z, const double \&pos\+\_\+x, const double \&pos\+\_\+y, const double \&pos\+\_\+z)
+\begin{DoxyCompactList}\small\item\em set\+Bounding\+Box Sets the size of the bounding box and resets the publisher \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classyak__ros_1_1VisualizerRos1_a3979358b1d8722231706ae85d933cf8a}{clear\+Bounding\+Box}} ()
+\begin{DoxyCompactList}\small\item\em Clears the bounding box marker and stops the bounding box timer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classyak__ros_1_1VisualizerRos1_a2395fe2508f3acaf6b19b3ceb835a995}{set\+Mesh\+Resource}} (const std\+::string \&mesh\+\_\+resource)
+\begin{DoxyCompactList}\small\item\em Sets the mesh resource associated with the mesh marker and starts the mesh marker timer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classyak__ros_1_1VisualizerRos1_a532be3dd5535c85705add01666adf5fe}{clear\+Mesh}} ()
+\begin{DoxyCompactList}\small\item\em Clears the mesh marker and stops mesh marker timer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string \mbox{\hyperlink{classyak__ros_1_1VisualizerRos1_a82d7c67fea8f931788b5798ab2bfeead}{mesh\+\_\+frame\+\_\+id\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Frame with which the mesh markers are associated. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classyak__ros_1_1VisualizerRos1_afea791979fdcf1ddf276c6a4a5bcfc4f}{bbox\+\_\+frame\+\_\+id\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Frame with which the bounding box markers are associated. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classyak__ros_1_1VisualizerRos1_a6d23ddb3ee773d7db042195ee5e154b6}{publish\+Bounding\+Box\+Callback}} (const ros\+::\+Timer\+Event \&)
+\begin{DoxyCompactList}\small\item\em R\+OS timer callback to publish the bounding box. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classyak__ros_1_1VisualizerRos1_ad55b563b4c3768c54e94afb24461fa0c}{publish\+Mesh\+Callback}} (const ros\+::\+Timer\+Event \&)
+\begin{DoxyCompactList}\small\item\em R\+OS timer callback to publish the mesh. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structyak__ros_1_1BoundingBox}{Bounding\+Box}} \mbox{\hyperlink{classyak__ros_1_1VisualizerRos1_a4d93329fee3146ff34b4274748503478}{bbox\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Bounding box defining the T\+S\+DF Volume. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classyak__ros_1_1VisualizerRos1_a252c6705d8c5c4392679d41e3c96b55e}{mesh\+\_\+resource\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Mesh resource defining the T\+S\+DF results. \end{DoxyCompactList}\item 
+ros\+::\+Timer \mbox{\hyperlink{classyak__ros_1_1VisualizerRos1_ac5fe9036ad31260bef5128adba05bb8a}{bbox\+\_\+timer\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Timer used to publish the bounding box at regular intervals (1 second) \end{DoxyCompactList}\item 
+ros\+::\+Timer \mbox{\hyperlink{classyak__ros_1_1VisualizerRos1_ae7b116f604b7ba0e63ba0ba3fb75a997}{mesh\+\_\+timer\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Timer used to publish the mesh at regular intervals (1 second) \end{DoxyCompactList}\item 
+ros\+::\+Node\+Handle \mbox{\hyperlink{classyak__ros_1_1VisualizerRos1_a38bbd9c1852d5d910727b1ad30768bd2}{nh\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Nodehandle associated with the marker publisher. \end{DoxyCompactList}\item 
+ros\+::\+Publisher \mbox{\hyperlink{classyak__ros_1_1VisualizerRos1_a893665d2b127cc9d017ac9746e11775f}{vis\+\_\+publisher\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Publisher for markers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This class visualizes useful information for yak\+\_\+ros1\+\_\+node. It publishes the tsdf volume as a bounding box as well as the resultant mesh. 
+
+Note that these markers are published every second by a R\+OS timer that is started when the feature is set and stopped when the feature is cleared. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classyak__ros_1_1VisualizerRos1_adfe0398f2b34278bc567924064629f70}\label{classyak__ros_1_1VisualizerRos1_adfe0398f2b34278bc567924064629f70}} 
+\index{yak\_ros::VisualizerRos1@{yak\_ros::VisualizerRos1}!VisualizerRos1@{VisualizerRos1}}
+\index{VisualizerRos1@{VisualizerRos1}!yak\_ros::VisualizerRos1@{yak\_ros::VisualizerRos1}}
+\doxysubsubsection{\texorpdfstring{VisualizerRos1()}{VisualizerRos1()}}
+{\footnotesize\ttfamily Visualizer\+Ros1\+::\+Visualizer\+Ros1 (\begin{DoxyParamCaption}\item[{const ros\+::\+Node\+Handle \&}]{nh,  }\item[{const std\+::string \&}]{frame\+\_\+id }\end{DoxyParamCaption})}
+
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nh} & Nodehandle associated with the marker publisher \\
+\hline
+{\em frame\+\_\+id} & The TF frame associated with tsdf volume. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classyak__ros_1_1VisualizerRos1_a3979358b1d8722231706ae85d933cf8a}\label{classyak__ros_1_1VisualizerRos1_a3979358b1d8722231706ae85d933cf8a}} 
+\index{yak\_ros::VisualizerRos1@{yak\_ros::VisualizerRos1}!clearBoundingBox@{clearBoundingBox}}
+\index{clearBoundingBox@{clearBoundingBox}!yak\_ros::VisualizerRos1@{yak\_ros::VisualizerRos1}}
+\doxysubsubsection{\texorpdfstring{clearBoundingBox()}{clearBoundingBox()}}
+{\footnotesize\ttfamily void Visualizer\+Ros1\+::clear\+Bounding\+Box (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Clears the bounding box marker and stops the bounding box timer. 
+
+\mbox{\Hypertarget{classyak__ros_1_1VisualizerRos1_a532be3dd5535c85705add01666adf5fe}\label{classyak__ros_1_1VisualizerRos1_a532be3dd5535c85705add01666adf5fe}} 
+\index{yak\_ros::VisualizerRos1@{yak\_ros::VisualizerRos1}!clearMesh@{clearMesh}}
+\index{clearMesh@{clearMesh}!yak\_ros::VisualizerRos1@{yak\_ros::VisualizerRos1}}
+\doxysubsubsection{\texorpdfstring{clearMesh()}{clearMesh()}}
+{\footnotesize\ttfamily void Visualizer\+Ros1\+::clear\+Mesh (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Clears the mesh marker and stops mesh marker timer. 
+
+\mbox{\Hypertarget{classyak__ros_1_1VisualizerRos1_a6d23ddb3ee773d7db042195ee5e154b6}\label{classyak__ros_1_1VisualizerRos1_a6d23ddb3ee773d7db042195ee5e154b6}} 
+\index{yak\_ros::VisualizerRos1@{yak\_ros::VisualizerRos1}!publishBoundingBoxCallback@{publishBoundingBoxCallback}}
+\index{publishBoundingBoxCallback@{publishBoundingBoxCallback}!yak\_ros::VisualizerRos1@{yak\_ros::VisualizerRos1}}
+\doxysubsubsection{\texorpdfstring{publishBoundingBoxCallback()}{publishBoundingBoxCallback()}}
+{\footnotesize\ttfamily void Visualizer\+Ros1\+::publish\+Bounding\+Box\+Callback (\begin{DoxyParamCaption}\item[{const ros\+::\+Timer\+Event \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+R\+OS timer callback to publish the bounding box. 
+
+\mbox{\Hypertarget{classyak__ros_1_1VisualizerRos1_ad55b563b4c3768c54e94afb24461fa0c}\label{classyak__ros_1_1VisualizerRos1_ad55b563b4c3768c54e94afb24461fa0c}} 
+\index{yak\_ros::VisualizerRos1@{yak\_ros::VisualizerRos1}!publishMeshCallback@{publishMeshCallback}}
+\index{publishMeshCallback@{publishMeshCallback}!yak\_ros::VisualizerRos1@{yak\_ros::VisualizerRos1}}
+\doxysubsubsection{\texorpdfstring{publishMeshCallback()}{publishMeshCallback()}}
+{\footnotesize\ttfamily void Visualizer\+Ros1\+::publish\+Mesh\+Callback (\begin{DoxyParamCaption}\item[{const ros\+::\+Timer\+Event \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+R\+OS timer callback to publish the mesh. 
+
+\mbox{\Hypertarget{classyak__ros_1_1VisualizerRos1_a4da85217c0dc895e2284f1a188e0b66d}\label{classyak__ros_1_1VisualizerRos1_a4da85217c0dc895e2284f1a188e0b66d}} 
+\index{yak\_ros::VisualizerRos1@{yak\_ros::VisualizerRos1}!setBoundingBox@{setBoundingBox}}
+\index{setBoundingBox@{setBoundingBox}!yak\_ros::VisualizerRos1@{yak\_ros::VisualizerRos1}}
+\doxysubsubsection{\texorpdfstring{setBoundingBox()}{setBoundingBox()}}
+{\footnotesize\ttfamily void Visualizer\+Ros1\+::set\+Bounding\+Box (\begin{DoxyParamCaption}\item[{const double \&}]{neg\+\_\+x,  }\item[{const double \&}]{neg\+\_\+y,  }\item[{const double \&}]{neg\+\_\+z,  }\item[{const double \&}]{pos\+\_\+x,  }\item[{const double \&}]{pos\+\_\+y,  }\item[{const double \&}]{pos\+\_\+z }\end{DoxyParamCaption})}
+
+
+
+set\+Bounding\+Box Sets the size of the bounding box and resets the publisher 
+
+
+\begin{DoxyParams}{Parameters}
+{\em neg\+\_\+x} & Location of yz plane in negative direction \\
+\hline
+{\em neg\+\_\+y} & Location of xz plane in negative direction \\
+\hline
+{\em neg\+\_\+z} & Location of xy plane in negative direction \\
+\hline
+{\em pos\+\_\+x} & Location of yz plane in positive direction \\
+\hline
+{\em pos\+\_\+y} & Location of xz plane in positive direction \\
+\hline
+{\em pos\+\_\+z} & Location of xy plane in positive direction \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classyak__ros_1_1VisualizerRos1_a2395fe2508f3acaf6b19b3ceb835a995}\label{classyak__ros_1_1VisualizerRos1_a2395fe2508f3acaf6b19b3ceb835a995}} 
+\index{yak\_ros::VisualizerRos1@{yak\_ros::VisualizerRos1}!setMeshResource@{setMeshResource}}
+\index{setMeshResource@{setMeshResource}!yak\_ros::VisualizerRos1@{yak\_ros::VisualizerRos1}}
+\doxysubsubsection{\texorpdfstring{setMeshResource()}{setMeshResource()}}
+{\footnotesize\ttfamily void Visualizer\+Ros1\+::set\+Mesh\+Resource (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{mesh\+\_\+resource }\end{DoxyParamCaption})}
+
+
+
+Sets the mesh resource associated with the mesh marker and starts the mesh marker timer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mesh\+\_\+resource} & The mesh resource for the mesh marker \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classyak__ros_1_1VisualizerRos1_a4d93329fee3146ff34b4274748503478}\label{classyak__ros_1_1VisualizerRos1_a4d93329fee3146ff34b4274748503478}} 
+\index{yak\_ros::VisualizerRos1@{yak\_ros::VisualizerRos1}!bbox\_@{bbox\_}}
+\index{bbox\_@{bbox\_}!yak\_ros::VisualizerRos1@{yak\_ros::VisualizerRos1}}
+\doxysubsubsection{\texorpdfstring{bbox\_}{bbox\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structyak__ros_1_1BoundingBox}{Bounding\+Box}} yak\+\_\+ros\+::\+Visualizer\+Ros1\+::bbox\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Bounding box defining the T\+S\+DF Volume. 
+
+\mbox{\Hypertarget{classyak__ros_1_1VisualizerRos1_afea791979fdcf1ddf276c6a4a5bcfc4f}\label{classyak__ros_1_1VisualizerRos1_afea791979fdcf1ddf276c6a4a5bcfc4f}} 
+\index{yak\_ros::VisualizerRos1@{yak\_ros::VisualizerRos1}!bbox\_frame\_id\_@{bbox\_frame\_id\_}}
+\index{bbox\_frame\_id\_@{bbox\_frame\_id\_}!yak\_ros::VisualizerRos1@{yak\_ros::VisualizerRos1}}
+\doxysubsubsection{\texorpdfstring{bbox\_frame\_id\_}{bbox\_frame\_id\_}}
+{\footnotesize\ttfamily std\+::string yak\+\_\+ros\+::\+Visualizer\+Ros1\+::bbox\+\_\+frame\+\_\+id\+\_\+}
+
+
+
+Frame with which the bounding box markers are associated. 
+
+\mbox{\Hypertarget{classyak__ros_1_1VisualizerRos1_ac5fe9036ad31260bef5128adba05bb8a}\label{classyak__ros_1_1VisualizerRos1_ac5fe9036ad31260bef5128adba05bb8a}} 
+\index{yak\_ros::VisualizerRos1@{yak\_ros::VisualizerRos1}!bbox\_timer\_@{bbox\_timer\_}}
+\index{bbox\_timer\_@{bbox\_timer\_}!yak\_ros::VisualizerRos1@{yak\_ros::VisualizerRos1}}
+\doxysubsubsection{\texorpdfstring{bbox\_timer\_}{bbox\_timer\_}}
+{\footnotesize\ttfamily ros\+::\+Timer yak\+\_\+ros\+::\+Visualizer\+Ros1\+::bbox\+\_\+timer\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Timer used to publish the bounding box at regular intervals (1 second) 
+
+\mbox{\Hypertarget{classyak__ros_1_1VisualizerRos1_a82d7c67fea8f931788b5798ab2bfeead}\label{classyak__ros_1_1VisualizerRos1_a82d7c67fea8f931788b5798ab2bfeead}} 
+\index{yak\_ros::VisualizerRos1@{yak\_ros::VisualizerRos1}!mesh\_frame\_id\_@{mesh\_frame\_id\_}}
+\index{mesh\_frame\_id\_@{mesh\_frame\_id\_}!yak\_ros::VisualizerRos1@{yak\_ros::VisualizerRos1}}
+\doxysubsubsection{\texorpdfstring{mesh\_frame\_id\_}{mesh\_frame\_id\_}}
+{\footnotesize\ttfamily std\+::string yak\+\_\+ros\+::\+Visualizer\+Ros1\+::mesh\+\_\+frame\+\_\+id\+\_\+}
+
+
+
+Frame with which the mesh markers are associated. 
+
+\mbox{\Hypertarget{classyak__ros_1_1VisualizerRos1_a252c6705d8c5c4392679d41e3c96b55e}\label{classyak__ros_1_1VisualizerRos1_a252c6705d8c5c4392679d41e3c96b55e}} 
+\index{yak\_ros::VisualizerRos1@{yak\_ros::VisualizerRos1}!mesh\_resource\_@{mesh\_resource\_}}
+\index{mesh\_resource\_@{mesh\_resource\_}!yak\_ros::VisualizerRos1@{yak\_ros::VisualizerRos1}}
+\doxysubsubsection{\texorpdfstring{mesh\_resource\_}{mesh\_resource\_}}
+{\footnotesize\ttfamily std\+::string yak\+\_\+ros\+::\+Visualizer\+Ros1\+::mesh\+\_\+resource\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Mesh resource defining the T\+S\+DF results. 
+
+\mbox{\Hypertarget{classyak__ros_1_1VisualizerRos1_ae7b116f604b7ba0e63ba0ba3fb75a997}\label{classyak__ros_1_1VisualizerRos1_ae7b116f604b7ba0e63ba0ba3fb75a997}} 
+\index{yak\_ros::VisualizerRos1@{yak\_ros::VisualizerRos1}!mesh\_timer\_@{mesh\_timer\_}}
+\index{mesh\_timer\_@{mesh\_timer\_}!yak\_ros::VisualizerRos1@{yak\_ros::VisualizerRos1}}
+\doxysubsubsection{\texorpdfstring{mesh\_timer\_}{mesh\_timer\_}}
+{\footnotesize\ttfamily ros\+::\+Timer yak\+\_\+ros\+::\+Visualizer\+Ros1\+::mesh\+\_\+timer\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Timer used to publish the mesh at regular intervals (1 second) 
+
+\mbox{\Hypertarget{classyak__ros_1_1VisualizerRos1_a38bbd9c1852d5d910727b1ad30768bd2}\label{classyak__ros_1_1VisualizerRos1_a38bbd9c1852d5d910727b1ad30768bd2}} 
+\index{yak\_ros::VisualizerRos1@{yak\_ros::VisualizerRos1}!nh\_@{nh\_}}
+\index{nh\_@{nh\_}!yak\_ros::VisualizerRos1@{yak\_ros::VisualizerRos1}}
+\doxysubsubsection{\texorpdfstring{nh\_}{nh\_}}
+{\footnotesize\ttfamily ros\+::\+Node\+Handle yak\+\_\+ros\+::\+Visualizer\+Ros1\+::nh\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Nodehandle associated with the marker publisher. 
+
+\mbox{\Hypertarget{classyak__ros_1_1VisualizerRos1_a893665d2b127cc9d017ac9746e11775f}\label{classyak__ros_1_1VisualizerRos1_a893665d2b127cc9d017ac9746e11775f}} 
+\index{yak\_ros::VisualizerRos1@{yak\_ros::VisualizerRos1}!vis\_publisher\_@{vis\_publisher\_}}
+\index{vis\_publisher\_@{vis\_publisher\_}!yak\_ros::VisualizerRos1@{yak\_ros::VisualizerRos1}}
+\doxysubsubsection{\texorpdfstring{vis\_publisher\_}{vis\_publisher\_}}
+{\footnotesize\ttfamily ros\+::\+Publisher yak\+\_\+ros\+::\+Visualizer\+Ros1\+::vis\+\_\+publisher\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Publisher for markers. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+yak\+\_\+ros2/include/yak\+\_\+ros/\mbox{\hyperlink{visualizer__node_8h}{visualizer\+\_\+node.\+h}}\item 
+yak\+\_\+ros2/src/yak\+\_\+ros/\mbox{\hyperlink{visualizer__node_8cpp}{visualizer\+\_\+node.\+cpp}}\end{DoxyCompactItemize}

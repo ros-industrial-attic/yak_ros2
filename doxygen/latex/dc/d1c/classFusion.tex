@@ -1,0 +1,130 @@
+\hypertarget{classFusion}{}\doxysection{Fusion Class Reference}
+\label{classFusion}\index{Fusion@{Fusion}}
+
+
+The \mbox{\hyperlink{classFusion}{Fusion}} class. Integrate depth images into a T\+S\+DF volume. When requested, mesh the volume using marching cubes. Note that this will work using both simulated and real robots and depth cameras.  
+
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classFusion_a655f48282010b5cc16a84ca8e1cb09ac}{Fusion}} (const rclcpp\+::\+Node\+::\+Shared\+Ptr node, const kfusion\+::\+Kin\+Fu\+Params \&params, const Eigen\+::\+Affine3f \&world\+\_\+to\+\_\+volume, const std\+::string tsdf\+\_\+base\+\_\+frame)
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classFusion}{Fusion}} constructor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+rclcpp\+::\+Node\+::\+Shared\+Ptr \mbox{\hyperlink{classFusion_a5a8c29bc10742dd1e86372046ab6c56a}{node\+\_\+}}
+\item 
+rclcpp\+::\+Clock\+::\+Shared\+Ptr \mbox{\hyperlink{classFusion_a16bacfc815d52f9ffb762e55ba6f09b1}{clock\+\_\+}}
+\item 
+rclcpp\+::\+Subscription$<$ sensor\+\_\+msgs\+::msg\+::\+Image $>$\+::Shared\+Ptr \mbox{\hyperlink{classFusion_ac9f6129fc43aeaedaf86d4c7a3de47c8}{depth\+\_\+image\+\_\+sub\+\_\+}}
+\item 
+rclcpp\+::\+Service$<$ std\+\_\+srvs\+::srv\+::\+Trigger $>$\+::Shared\+Ptr \mbox{\hyperlink{classFusion_ae7b7ac98d9165a93b56399de0b350fc9}{generate\+\_\+mesh\+\_\+service\+\_\+}}
+\item 
+std\+::string \mbox{\hyperlink{classFusion_a0873eb852cc1d8c68deac2b628fb4b95}{tsdf\+\_\+base\+\_\+frame\+\_\+}}
+\item 
+tf2\+\_\+ros\+::\+Buffer \mbox{\hyperlink{classFusion_a9525dccfbb99227c4902d91e5ec16260}{tf\+\_\+buffer\+\_\+}}
+\item 
+tf2\+\_\+ros\+::\+Transform\+Listener \mbox{\hyperlink{classFusion_a2457da27ef07fdce0f0518969da10fa8}{robot\+\_\+tform\+\_\+listener\+\_\+}}
+\item 
+yak\+::\+Fusion\+Server \mbox{\hyperlink{classFusion_ac824b8122d5406a21fd28f4f49c80397}{fusion\+\_\+}}
+\item 
+const kfusion\+::\+Kin\+Fu\+Params \mbox{\hyperlink{classFusion_aa3ac2a204c53bec9b5a63f510a8a8b1b}{params\+\_\+}}
+\item 
+Eigen\+::\+Affine3d \mbox{\hyperlink{classFusion_aa0027b5ad8e502192eee71c58a7b146f}{world\+\_\+to\+\_\+camera\+\_\+prev\+\_\+}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{classFusion}{Fusion}} class. Integrate depth images into a T\+S\+DF volume. When requested, mesh the volume using marching cubes. Note that this will work using both simulated and real robots and depth cameras. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classFusion_a655f48282010b5cc16a84ca8e1cb09ac}\label{classFusion_a655f48282010b5cc16a84ca8e1cb09ac}} 
+\index{Fusion@{Fusion}!Fusion@{Fusion}}
+\index{Fusion@{Fusion}!Fusion@{Fusion}}
+\doxysubsubsection{\texorpdfstring{Fusion()}{Fusion()}}
+{\footnotesize\ttfamily Fusion\+::\+Fusion (\begin{DoxyParamCaption}\item[{const rclcpp\+::\+Node\+::\+Shared\+Ptr}]{node,  }\item[{const kfusion\+::\+Kin\+Fu\+Params \&}]{params,  }\item[{const Eigen\+::\+Affine3f \&}]{world\+\_\+to\+\_\+volume,  }\item[{const std\+::string}]{tsdf\+\_\+base\+\_\+frame }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+\mbox{\hyperlink{classFusion}{Fusion}} constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & -\/ rclcpp node \\
+\hline
+{\em params} & -\/ Kin\+Fu parameters such as T\+S\+DF volume size, resolution, etc. \\
+\hline
+{\em world\+\_\+to\+\_\+volume} & -\/ Transform from world frame to volume origin frame. \\
+\hline
+{\em tsdf\+\_\+base\+\_\+frame} & -\/ The name of the tf frame that will be used as the base frame when performing lookups between the T\+S\+DF volume and the camera frame. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classFusion_a16bacfc815d52f9ffb762e55ba6f09b1}\label{classFusion_a16bacfc815d52f9ffb762e55ba6f09b1}} 
+\index{Fusion@{Fusion}!clock\_@{clock\_}}
+\index{clock\_@{clock\_}!Fusion@{Fusion}}
+\doxysubsubsection{\texorpdfstring{clock\_}{clock\_}}
+{\footnotesize\ttfamily rclcpp\+::\+Clock\+::\+Shared\+Ptr Fusion\+::clock\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classFusion_ac9f6129fc43aeaedaf86d4c7a3de47c8}\label{classFusion_ac9f6129fc43aeaedaf86d4c7a3de47c8}} 
+\index{Fusion@{Fusion}!depth\_image\_sub\_@{depth\_image\_sub\_}}
+\index{depth\_image\_sub\_@{depth\_image\_sub\_}!Fusion@{Fusion}}
+\doxysubsubsection{\texorpdfstring{depth\_image\_sub\_}{depth\_image\_sub\_}}
+{\footnotesize\ttfamily rclcpp\+::\+Subscription$<$sensor\+\_\+msgs\+::msg\+::\+Image$>$\+::Shared\+Ptr Fusion\+::depth\+\_\+image\+\_\+sub\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classFusion_ac824b8122d5406a21fd28f4f49c80397}\label{classFusion_ac824b8122d5406a21fd28f4f49c80397}} 
+\index{Fusion@{Fusion}!fusion\_@{fusion\_}}
+\index{fusion\_@{fusion\_}!Fusion@{Fusion}}
+\doxysubsubsection{\texorpdfstring{fusion\_}{fusion\_}}
+{\footnotesize\ttfamily yak\+::\+Fusion\+Server Fusion\+::fusion\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classFusion_ae7b7ac98d9165a93b56399de0b350fc9}\label{classFusion_ae7b7ac98d9165a93b56399de0b350fc9}} 
+\index{Fusion@{Fusion}!generate\_mesh\_service\_@{generate\_mesh\_service\_}}
+\index{generate\_mesh\_service\_@{generate\_mesh\_service\_}!Fusion@{Fusion}}
+\doxysubsubsection{\texorpdfstring{generate\_mesh\_service\_}{generate\_mesh\_service\_}}
+{\footnotesize\ttfamily rclcpp\+::\+Service$<$std\+\_\+srvs\+::srv\+::\+Trigger$>$\+::Shared\+Ptr Fusion\+::generate\+\_\+mesh\+\_\+service\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classFusion_a5a8c29bc10742dd1e86372046ab6c56a}\label{classFusion_a5a8c29bc10742dd1e86372046ab6c56a}} 
+\index{Fusion@{Fusion}!node\_@{node\_}}
+\index{node\_@{node\_}!Fusion@{Fusion}}
+\doxysubsubsection{\texorpdfstring{node\_}{node\_}}
+{\footnotesize\ttfamily rclcpp\+::\+Node\+::\+Shared\+Ptr Fusion\+::node\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classFusion_aa3ac2a204c53bec9b5a63f510a8a8b1b}\label{classFusion_aa3ac2a204c53bec9b5a63f510a8a8b1b}} 
+\index{Fusion@{Fusion}!params\_@{params\_}}
+\index{params\_@{params\_}!Fusion@{Fusion}}
+\doxysubsubsection{\texorpdfstring{params\_}{params\_}}
+{\footnotesize\ttfamily const kfusion\+::\+Kin\+Fu\+Params Fusion\+::params\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classFusion_a2457da27ef07fdce0f0518969da10fa8}\label{classFusion_a2457da27ef07fdce0f0518969da10fa8}} 
+\index{Fusion@{Fusion}!robot\_tform\_listener\_@{robot\_tform\_listener\_}}
+\index{robot\_tform\_listener\_@{robot\_tform\_listener\_}!Fusion@{Fusion}}
+\doxysubsubsection{\texorpdfstring{robot\_tform\_listener\_}{robot\_tform\_listener\_}}
+{\footnotesize\ttfamily tf2\+\_\+ros\+::\+Transform\+Listener Fusion\+::robot\+\_\+tform\+\_\+listener\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classFusion_a9525dccfbb99227c4902d91e5ec16260}\label{classFusion_a9525dccfbb99227c4902d91e5ec16260}} 
+\index{Fusion@{Fusion}!tf\_buffer\_@{tf\_buffer\_}}
+\index{tf\_buffer\_@{tf\_buffer\_}!Fusion@{Fusion}}
+\doxysubsubsection{\texorpdfstring{tf\_buffer\_}{tf\_buffer\_}}
+{\footnotesize\ttfamily tf2\+\_\+ros\+::\+Buffer Fusion\+::tf\+\_\+buffer\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classFusion_a0873eb852cc1d8c68deac2b628fb4b95}\label{classFusion_a0873eb852cc1d8c68deac2b628fb4b95}} 
+\index{Fusion@{Fusion}!tsdf\_base\_frame\_@{tsdf\_base\_frame\_}}
+\index{tsdf\_base\_frame\_@{tsdf\_base\_frame\_}!Fusion@{Fusion}}
+\doxysubsubsection{\texorpdfstring{tsdf\_base\_frame\_}{tsdf\_base\_frame\_}}
+{\footnotesize\ttfamily std\+::string Fusion\+::tsdf\+\_\+base\+\_\+frame\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classFusion_aa0027b5ad8e502192eee71c58a7b146f}\label{classFusion_aa0027b5ad8e502192eee71c58a7b146f}} 
+\index{Fusion@{Fusion}!world\_to\_camera\_prev\_@{world\_to\_camera\_prev\_}}
+\index{world\_to\_camera\_prev\_@{world\_to\_camera\_prev\_}!Fusion@{Fusion}}
+\doxysubsubsection{\texorpdfstring{world\_to\_camera\_prev\_}{world\_to\_camera\_prev\_}}
+{\footnotesize\ttfamily Eigen\+::\+Affine3d Fusion\+::world\+\_\+to\+\_\+camera\+\_\+prev\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+yak\+\_\+ros2/src/\mbox{\hyperlink{yak__node_8cpp}{yak\+\_\+node.\+cpp}}\end{DoxyCompactItemize}

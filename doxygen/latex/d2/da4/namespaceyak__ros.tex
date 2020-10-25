@@ -1,0 +1,37 @@
+\hypertarget{namespaceyak__ros}{}\doxysection{yak\+\_\+ros Namespace Reference}
+\label{namespaceyak__ros}\index{yak\_ros@{yak\_ros}}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structyak__ros_1_1BoundingBox}{Bounding\+Box}}
+\begin{DoxyCompactList}\small\item\em Structure for containing the information to define a bounding box. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classyak__ros_1_1VisualizerRos1}{Visualizer\+Ros1}}
+\begin{DoxyCompactList}\small\item\em This class visualizes useful information for yak\+\_\+ros1\+\_\+node. It publishes the tsdf volume as a bounding box as well as the resultant mesh. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{namespaceyak__ros_a7f79e7657f309c52f157692ae8578bba}{update\+Params}} (kfusion\+::\+Kin\+Fu\+Params \&params, yak\+\_\+ros\+\_\+msgs\+::\+Update\+Kin\+Fu\+Params\+Request \&request)
+\begin{DoxyCompactList}\small\item\em Update Kin\+Fu\+Params based on a given R\+OS service request. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespaceyak__ros_a7f79e7657f309c52f157692ae8578bba}\label{namespaceyak__ros_a7f79e7657f309c52f157692ae8578bba}} 
+\index{yak\_ros@{yak\_ros}!updateParams@{updateParams}}
+\index{updateParams@{updateParams}!yak\_ros@{yak\_ros}}
+\doxysubsubsection{\texorpdfstring{updateParams()}{updateParams()}}
+{\footnotesize\ttfamily bool yak\+\_\+ros\+::update\+Params (\begin{DoxyParamCaption}\item[{kfusion\+::\+Kin\+Fu\+Params \&}]{params,  }\item[{yak\+\_\+ros\+\_\+msgs\+::\+Update\+Kin\+Fu\+Params\+Request \&}]{request }\end{DoxyParamCaption})}
+
+
+
+Update Kin\+Fu\+Params based on a given R\+OS service request. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em params} & The params to be updated \\
+\hline
+{\em request} & The service request. Note that there is a list of parameters to be updated since usually you only want to change one or two of them \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if successful. 
+\end{DoxyReturn}

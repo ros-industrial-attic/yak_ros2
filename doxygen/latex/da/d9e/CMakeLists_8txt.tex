@@ -1,0 +1,24 @@
+\hypertarget{CMakeLists_8txt}{}\doxysection{yak\+\_\+ros2/\+C\+Make\+Lists.txt File Reference}
+\label{CMakeLists_8txt}\index{yak\_ros2/CMakeLists.txt@{yak\_ros2/CMakeLists.txt}}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{CMakeLists_8txt_a6cd411f0c2a263341f484098032b288a}{cmake\+\_\+minimum\+\_\+required}} (V\+E\+R\+S\+I\+ON 3.\+5.\+0) project(yak\+\_\+ros2 V\+E\+R\+S\+I\+ON 0.\+1.\+0 L\+A\+N\+G\+U\+A\+G\+ES C\+XX) if(N\+OT C\+M\+A\+K\+E\+\_\+\+C\+X\+X\+\_\+\+S\+T\+A\+N\+D\+A\+RD) set(C\+M\+A\+K\+E\+\_\+\+C\+X\+X\+\_\+\+S\+T\+A\+N\+D\+A\+RD 17) endif() if(C\+M\+A\+K\+E\+\_\+\+C\+O\+M\+P\+I\+L\+E\+R\+\_\+\+I\+S\+\_\+\+G\+N\+U\+C\+XX OR C\+M\+A\+K\+E\+\_\+\+C\+X\+X\+\_\+\+C\+O\+M\+P\+I\+L\+E\+R\+\_\+\+ID M\+A\+T\+C\+H\+ES \char`\"{}Clang\char`\"{}) add\+\_\+compile\+\_\+options(-\/Wall -\/Wextra) endif() find\+\_\+package(yak R\+E\+Q\+U\+I\+R\+ED) find\+\_\+package(std\+\_\+srvs R\+E\+Q\+U\+I\+R\+ED) find\+\_\+package(sensor\+\_\+msgs R\+E\+Q\+U\+I\+R\+ED) find\+\_\+package(geometry\+\_\+msgs R\+E\+Q\+U\+I\+R\+ED) find\+\_\+package(visualization\+\_\+msgs R\+E\+Q\+U\+I\+R\+ED) find\+\_\+package(tf2\+\_\+ros R\+E\+Q\+U\+I\+R\+ED) find\+\_\+package(tf2\+\_\+eigen R\+E\+Q\+U\+I\+R\+ED) find\+\_\+package(cv\+\_\+bridge R\+E\+Q\+U\+I\+R\+ED) find\+\_\+package(Eigen3 R\+E\+Q\+U\+I\+R\+ED) find\+\_\+package(ament\+\_\+cmake R\+E\+Q\+U\+I\+R\+ED) find\+\_\+package(rclcpp R\+E\+Q\+U\+I\+R\+ED) add\+\_\+executable(\$
+\item 
+\+\_\+node src yak\+\_\+node cpp \mbox{\hyperlink{CMakeLists_8txt_a1d2fe76571caca6896f87e350cf72654}{target\+\_\+include\+\_\+directories}} (\$\{P\+R\+O\+J\+E\+C\+T\+\_\+\+N\+A\+ME\}\+\_\+node P\+U\+B\+L\+IC \$\{rclcpp\+\_\+\+I\+N\+C\+L\+U\+D\+E\+\_\+\+D\+I\+RS\}) target\+\_\+link\+\_\+libraries(\$
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{CMakeLists_8txt_a6cd411f0c2a263341f484098032b288a}\label{CMakeLists_8txt_a6cd411f0c2a263341f484098032b288a}} 
+\index{CMakeLists.txt@{CMakeLists.txt}!cmake\_minimum\_required@{cmake\_minimum\_required}}
+\index{cmake\_minimum\_required@{cmake\_minimum\_required}!CMakeLists.txt@{CMakeLists.txt}}
+\doxysubsubsection{\texorpdfstring{cmake\_minimum\_required()}{cmake\_minimum\_required()}}
+{\footnotesize\ttfamily cmake\+\_\+minimum\+\_\+required (\begin{DoxyParamCaption}\item[{V\+E\+R\+S\+I\+ON 3.\+5.}]{0 }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{CMakeLists_8txt_a1d2fe76571caca6896f87e350cf72654}\label{CMakeLists_8txt_a1d2fe76571caca6896f87e350cf72654}} 
+\index{CMakeLists.txt@{CMakeLists.txt}!target\_include\_directories@{target\_include\_directories}}
+\index{target\_include\_directories@{target\_include\_directories}!CMakeLists.txt@{CMakeLists.txt}}
+\doxysubsubsection{\texorpdfstring{target\_include\_directories()}{target\_include\_directories()}}
+{\footnotesize\ttfamily \+\_\+node src yak\+\_\+node cpp target\+\_\+include\+\_\+directories (\begin{DoxyParamCaption}\item[{}]{\$\{\+P\+R\+O\+J\+E\+C\+T\+\_\+\+N\+A\+M\+E\}\+\_\+node P\+U\+B\+L\+I\+C \$\{rclcpp\+\_\+\+I\+N\+C\+L\+U\+D\+E\+\_\+\+D\+I\+R\+S\} }\end{DoxyParamCaption})}
+
