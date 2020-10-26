@@ -66,7 +66,7 @@ install(TARGETS ${PROJECT_NAME}_node
 install(DIRECTORY launch demo
         DESTINATION share/${PROJECT_NAME})
 
-if(BUILD_DEMO)
+if(BUILD_DEMO OR BUILD_TESTING)
     find_package(gl_depth_sim REQUIRED)
     find_package(image_transport REQUIRED)
     add_executable(${PROJECT_NAME}_image_simulator
@@ -101,4 +101,9 @@ if(BUILD_DEMO)
       )
     install(TARGETS ${PROJECT_NAME}_image_simulator ${PROJECT_NAME}_tf_broadcaster
             RUNTIME DESTINATION lib/${PROJECT_NAME})
+
+    if(BUILD_TESTING)
+        find_package(launch_testing_ament_cmake REQUIRED)
+        add_launch_test(test/launch_test/yak_ros2_launch_test.py)
+     endif()
 endif()
